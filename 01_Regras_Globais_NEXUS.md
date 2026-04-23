@@ -20,6 +20,9 @@ A plataforma possui imunidade contra edições diretas "a quente". O daemon `qua
 4. Enviar para a nuvem (`git push origin HEAD:main`).
 5. Apenas no estado *clean*, executar `sudo systemctl restart`.
 
+**ATENÇÃO ABSOLUTA:** É estritamente proibido criar/editar ficheiros localmente fora do fluxo (ex: `/home/arruda/scratch/`) e injetá-los em produção com `sudo cp`. Para garantir a integridade do repositório, utiliza **SEMPRE** o script automatizado na raiz do projeto:
+`sudo -u trader ./nexus_deploy.sh "Mensagem da atualização"`
+
 ### 4. Isolamento Térmico de Ecossistemas
 O Geekom abriga dois mundos que **não se tocam**:
 * **NEXUS:** Trading, LTI, Ops (`/opt/quant_mentor/`, utilizador `trader`).
