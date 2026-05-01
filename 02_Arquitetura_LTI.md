@@ -13,4 +13,14 @@ Qualquer sistema, bot, guiões de reconciliação, Night Sweepers ou o Agente Op
 2. **Monitorização:** A Torre de Controlo reflete o P&L do LTI separadamente na tab "Risk & LTI", garantindo que a performance do motor genético do NEXUS não seja inflacionada/deflacionada pelas flutuações do portfolio de longo prazo.
 
 ---
+
+### Orphan Sweep — Liquidação Autónoma de Posições Órfãs
+A partir de 30 de Abril de 2026, o motor de liquidação de posições órfãs foi **integrado nativamente no `core/scheduler.py`** como o método `_monday_orphan_liquidation`.
+
+- **Disparo:** Automático às **09:31 ET de cada segunda-feira** (30s após a abertura do mercado RTH).
+- **Imunidade LTI:** A lista `LTI_ETFS = {'VWCE', 'SXR8', 'IMAE', 'EUNA', '4GLD', 'SPYD'}` está codificada no próprio método — jamais serão submetidas ordens contra estes ETFs.
+- **Proteção Adicional:** Cruza posições com a tabela `trades WHERE status='OPEN'` para preservar estratégias táticas ativas e respeita o `orderRef='GUARDIAN'` do Position Guardian para evitar Deadlock Loops.
+- **O script standalone** `/opt/quant_mentor/scripts/auto_liquidator.py` permanece como backup histórico, mas a lógica canónica vive no Scheduler.
+
+---
 *Este documento garante que as jóias da coroa nunca são vendidas pelo motor tático de curto-prazo.*
