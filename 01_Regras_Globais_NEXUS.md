@@ -34,4 +34,18 @@ Nunca partilhar permissões, chaves SSH ou cruzar dependências entre as contas.
 * Operações de manutenção automatizadas usam **SEMPRE** `LimitOrder` focadas no *Mid-Price* e estão restritas a horários seguros (`outsideRth=False`).
 
 ---
+
+### 6. Governança Progressiva & Drawdown Recovery (Nível 7)
+O sistema não opera de forma binária (Halt/No-Halt). Ele possui um protocolo progressivo de gestão de capital:
+* **Drawdown Recovery**: Consoante a saúde da conta, o NEXUS aplica um multiplicador de *sizing* global (100% → 75% → 50% → 25%). Ao atingir estado `DEFENSIVE` (>7% de DD), apenas estratégias `Mean-Reversion` (ex: VWAP) são autorizadas.
+* **Approval Level (Matriz de Confiança)**: O tamanho de cada trade resulta de um score (0.0 a 1.0) baseado em 3 pilares vitais com peso igual (33%): (1) Confiança do modelo IA, (2) Multiplicador VIX Macro, e (3) Multiplicador do Drawdown Recovery.
+* **Correlation Gating**: É terminantemente proibido o sistema comprar ativos cujos movimentos tenham mais de 85% de correlação com posições já abertas na conta no período de 20 dias (independência estatística rigorosa).
+
+### 7. Sandbox de Inteligência Artificial (`StrategyGenerator`)
+Qualquer código Alpha ou estratégia autogerada pelas IAs (Gemini/Vertex) atua num modo restrito e vigiado:
+* **Fail-Closed Principle**: Nunca IAs operam "Fail-Open". Qualquer falha de timeout nas APIs de decisão assume imediatamente a interdição do trade de alto-risco.
+* **Quarentena Estatística**: Uma estratégia gerada tem de preencher **30 operações em Paper/Simulação** (Significância Estatística). Apenas IAs com >52% de *Win Rate* e *Sharpe* > 0.8 ficam elegíveis.
+* **Capital Real só por intervenção Humana**: A promoção de quarentena para a conta real (Interactive Brokers) tem de ser **obrigatoriamente validada de forma manual** pelo Gestor através do comando Telegram (`/approve_sandbox`).
+
+---
 *Documento gerido pelo Cérebro Central. Qualquer IA agente a operar no sistema deve ler e respeitar estas diretrizes antes de modificar a infraestrutura.*

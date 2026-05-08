@@ -20,3 +20,12 @@ Exibe em tempo real (atualizado a cada 5 minutos pelo `scheduler.py` em ciclo de
 **Ação de Liquidação (TWAP Limit):**
 O botão de liquidação ao lado de um *Orphan* dispara o script independente `/opt/quant_mentor/scripts/liquidate_target.py` em *background*. Ele executa a liquidação cirúrgica (fechando o lado curto ou comprido) focado em **Limit Orders pelo Mid-Price**. 
 *Nota*: Nunca usamos Market Orders na Torre, garantindo resiliência contra volatilidade absurda.
+
+### 3. Telegram: Monitorização do Risk Engine (Nível 7) 🤖
+O Bot do Telegram é uma extensão da Torre e atua como canal primário bidirecional para as novas features arquiteturais.
+* `/status`: Agora retorna de forma gráfica o estado atual do **Drawdown Recovery** (`NORMAL 🟢`, `CAUTION 🟡`, `REDUCED 🟠`, `DEFENSIVE 🔴`) indicando o multiplicador ativo de redução de posições na conta em virtude da flutuação de *equity*.
+
+### 4. Telegram: Incubadora de Estratégias ML (Sandbox) 🧪
+Todas as estratégias Alpha autogeradas pela IA não entram logo no mercado de capitais. Nascem obrigatoriamente num ambiente confinado ("Sandbox").
+* `/sandbox`: Exibe a lista completa de estratégias ML ativas, o número de *trades* efetuados (precisam de um mínimo estatístico de 30), a respetiva taxa de vitória (*Win Rate*), PnL em simulação e se cumprem os requisitos para graduação.
+* `/approve_sandbox [ID]`: **Ato Humano Obrigatório**. Se uma estratégia passar em todos os crivos e for marcada como "Elegível para Graduação", só inicia operações com dinheiro real caso o Gestor emita este comando. A estratégia é então alocada gradualmente (com um teto conservador de capital inicial).
