@@ -49,3 +49,17 @@ Qualquer código Alpha ou estratégia autogerada pelas IAs (Gemini/Vertex) atua 
 
 ---
 *Documento gerido pelo Cérebro Central. Qualquer IA agente a operar no sistema deve ler e respeitar estas diretrizes antes de modificar a infraestrutura.*
+
+---
+
+## 🔬 Protocolo Forense de Evidência Mandatória (adicionado a 10/10/2026)
+Origem: incidente BAC (short órfão por stop esquecido) + posições fantasma na Torre. Diretiva: **"mesmo que pareça bem, investiga sempre; prefiro errar por excesso que por falta."**
+
+* **Presunção de falha:** qualquer alarme/discrepância é bug até prova em contrário com evidência. Proibido classificar como "ruído/normal" sem dissecar logs **e** código.
+* **Sem apaziguamento sem prova:** proibido dizer "está tudo bem" sem correr, no mesmo turno, o comando que o prova. Sem prova = **hipótese não verificada**.
+* **4 Pontos de Verdade:** (1) Broker real (posições + ordens de todos os clientIds), (2) BD `trades` OPEN, (3) ficheiros de estado (`state_store.json`, `live_positions.json`, `trading_halt.json` — ver idade), (4) código que ESCREVE e que CONSOME cada fonte.
+* **Ferramenta oficial:** `/opt/quant_mentor/scripts/verify_system_integrity.py` — exit `0` limpo / `1` avisos / `2` divergência crítica / `3` broker inacessível.
+* **Anti-penso-rápido:** `sleep`, `try/except` que engole erro, retry cego, restart "para limpar" ou editar estado à mão = parar e ir à causa-raiz, com teste que **falha no código antigo**.
+* **Honestidade:** separar *Confirmado* / *Inferido* / *Por investigar* e corrigir proativamente explicações anteriores erradas.
+
+Texto canónico: `C:\Users\pc\.gemini\GEMINI.md` §10.
