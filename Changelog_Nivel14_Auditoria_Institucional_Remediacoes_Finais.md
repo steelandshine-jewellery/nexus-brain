@@ -36,8 +36,14 @@ Em cumprimento rigoroso da diretiva *"mesmo que pareça bem, investiga sempre; p
 - **Ação:** Adicionada a regra `*.log*` ao `.gitignore` de `torre_controlo` para acomodar logs rotativos (`deploy.log.1`).
 - **Resultado:** Zero drift em todos os 5 repositórios (`quant-mentor`, `torre-controlo`, `lti-portfolio`, `strategy-incubator`, `shared-modules`).
 
+### 5. Alinhamento Canónico de `nexus_health.py` (Topologia Dupla & Micro-Futuros)
+- **Diagnóstico:** O script de verificação diária matinal (`06:00`) ainda procurava pelo serviço legado `ib-gateway` e desconhecia a estrutura de micro-futuros (`METALS` e `M6E`).
+- **Ação:** Atualizado `COMPONENTS` para monitorizar `ib-gateway-live` (porta 4001) e `ib-gateway-paper` (porta 4002); incluídas as exceções de futuros em `skip_variants`; removidos ficheiros JSON de estado dinâmico (`regime.json`) do rastreio Git em `shared-modules`.
+- **Resultado:** `NEXUS Health Check` atingiu a validação perfeita de **41 Passed | 0 Warnings | 0 Errors (100% Verde)**.
+
 ---
 
 ## 📊 Veredicto da Suite de Testes
 - **970 testes aprovados, 0 falhas** (`970 passed, 11 warnings in 111.66s`).
 - Todos os serviços ativos, íntegros e operacionais.
+- Telemetria de saúde global sem erros e sem falsos alarmes.
